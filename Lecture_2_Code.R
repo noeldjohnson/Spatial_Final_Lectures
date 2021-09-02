@@ -151,6 +151,7 @@ st_distance(cty1,cty2) # st_distance(ctys) for matrix
 
 st_area(ctys) # points have no area
 
+# Begin Here
 require(units)
 a_to_b <- st_distance(cty1,cty2)
 set_units(a_to_b, km)
