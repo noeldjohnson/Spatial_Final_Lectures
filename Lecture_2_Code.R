@@ -8,6 +8,7 @@
 library(tidyverse)
 
 i_df <- iris # built-in data
+i_df
 class(i_df)
 head(i_df)
 
@@ -29,48 +30,36 @@ i_df <- as.data.frame(i_tbl)
 class(i_df)
 
 # Here's how to set a working directory
-#setwd("/Users/noeljohnson/Dropbox/Research/Tambora/Data/Analysis/Base_Data_Sets/Base_Temps_Data/Europe_temps/")
+#setwd("/Users/noeljohnson/Dropbox/Research/")
 
-temp_sp <- read_csv("/Users/noeljohnson/Dropbox/Research/Tambora/Data/Analysis/Base_Data_Sets/Base_Temps_Data/Europe_temps/temp_spring_eu.csv")
-temp_sp
-print(temp_sp, n=2)
+cps08 <- read_csv("data/cps08.csv")
+cps08
+print(cps08, n=2)
 
-temp <- select(temp_sp, year)
-temp <- filter(temp_sp, year==1815)
-filter(temp_sp, year==1815)
+cps08 <- select(cps08, c(age,bachelor,female))
+cps08 <- filter(cps08, age==33)
 
-data_1815 <- filter(temp_sp, year==1815)
+arrange(cps08, bachelor)
 
-arrange(temp_sp, temp_sp)
-arrange(temp_sp, -temp_sp)
+rename(cps08, married=bachelor)
+cps08
 
-rename(temp_sp, temp_spring=temp_sp, long=longitude, lat=latitude)
-temp_sp
 
-mutate(temp_sp, mean_deviation = temp_sp - mean(temp_sp, na.rm=TRUE) )
+mutate(cps08, agesq = age^2)
 
-temp_sp_grpd <- group_by(temp_sp, year)
-summarize(temp_sp_grpd, mean(temp_sp, na.rm=TRUE))
+# you can use stargazer to summarize variables
 
-summarise_all(temp_sp, list(mean), na.rm=TRUE)
-
-# or, you can use stargazer
+cps08 <- read_csv("data/cps08.csv")
 
 library(stargazer)
-temp_sp_no_na <- na.omit(temp_sp)
-stargazer(as.data.frame(temp_sp_no_na), type="text")
-stargazer(as.data.frame(temp_sp), type="text")
+cps08_no_na <- na.omit(cps08)
+stargazer(as.data.frame(cps08_no_na), type="text")
 
-temp <- temp_sp %>%
-  group_by(year) %>%
-  summarize(mean(temp_sp, na.rm=TRUE)) %>%
+cps08_bachmean <- cps08 %>%
+  group_by(bachelor) %>%
+  summarize(mean(ahe, na.rm=TRUE)) %>%
   ungroup()
-
-temp_sp <- temp_sp %>%
-  group_by(year) %>%
-  mutate(mean_yearly_temp = mean(temp_sp, na.rm=TRUE)) %>%
-  ungroup()
-temp_sp
+cps08_bachmean
 
 
 # Here's where the spatial stuff starts
@@ -87,9 +76,11 @@ library(sf)
 
 setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial_Fall_2019/Lectures/")
 
-africa_sf <- st_read("./data/africa_scale.shp")
+africa_sf <- st_read("data/africa_scale.shp")
 africa_sf
-plot(africa_sf["admin"])
+dim(africa_sf)
+
+plot(africa_sf[64])
 
 class(africa_sf) # What is it?
 st_crs(africa_sf) # What's the CRS?
