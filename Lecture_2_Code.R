@@ -64,28 +64,24 @@ cps08_bachmean
 
 # Here's where the spatial stuff starts
 
-#install.packages(sf)
-
-library(sf)
-
 rm(list=ls()) # clear space
 
 # get pkgs
 library(tidyverse)
 library(sf)
-
-setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial_Fall_2019/Lectures/")
+library(stargazer)
 
 africa_sf <- st_read("data/africa_scale.shp")
 africa_sf
-dim(africa_sf)
 
 plot(africa_sf[64])
 
+dim(africa_sf)
 class(africa_sf) # What is it?
 st_crs(africa_sf) # What's the CRS?
 st_bbox(africa_sf) # And the extent/bounding box?
-dim(africa_sf)
+
+stargazer(as.data.frame(africa_sf), type="text")
 
 # Subset, there are way too many variables
 africa_sf <- africa_sf %>%
@@ -98,7 +94,7 @@ names(africa_sf)[6]
 plot(africa_sf["pop_est"], reset=F)
 
 # read the csv of african cities
-cities_csv <- read_csv("./data/africa_cities.csv")
+cities_csv <- read_csv("data/africa_cities.csv")
 
 # filter out missing coords
 cities_csv <- cities_csv %>%
@@ -112,8 +108,9 @@ cities_sf <- st_as_sf(cities_csv,
 plot(cities_sf[1], axes = T, pch = 20,
      col = "black", main = "Cities")
 
+dev.off()
 # Plot the regions and cities together
-plot(africa_sf["pop_est"], axes = T,
+plot(africa_sf[6], axes = T,
      main = "WB Regions", key.pos = 1,
      key.width = lcm(1.3), key.length = 1.0, reset=F)
 plot(cities_sf[1], axes = T, pch = 20,
@@ -124,7 +121,7 @@ africa_sf <- africa_sf %>% st_set_crs(NA)
 st_crs(africa_sf)
 
 # assign a CRS
-africa_sf <- africa_sf %>% st_set_crs("+proj=longlat")
+africa_sf <- africa_sf %>% st_set_crs(4326)
 st_crs(africa_sf)
 
 # Nairobi in longlat
