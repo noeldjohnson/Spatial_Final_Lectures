@@ -161,7 +161,7 @@ as.numeric(a_to_b)
 # get the distance matrix and then gather
 small_cities <- cities_sf %>%
   slice(1:10)
-nameraw <- small_cities[[5,]]
+nameraw <- small_cities$nameraw
 nameraw
 dist_matrix <- st_distance(small_cities)
 dist_matrix
@@ -180,7 +180,7 @@ distance_Domoni
 # If I re-did this without redundant code...
 small_cities <- cities_sf %>%
   slice(1:10)
-nameraw <- small_cities[[5,]]
+nameraw <- small_cities$nameraw
 dist_matrix <- st_distance(small_cities)
 colnames(dist_matrix) <- nameraw
 dist_matrix <- as_tibble(dist_matrix)
