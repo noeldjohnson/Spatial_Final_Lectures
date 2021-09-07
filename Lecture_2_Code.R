@@ -1,5 +1,6 @@
 # Code for Spatial Econometrics: Lecture 2
-# 9/3/19
+# Created: 9/3/19
+# Last Updated: 9/1/21
 # Author: Noel D. Johnson
 
 
@@ -53,7 +54,10 @@ cps08 <- read_csv("data/cps08.csv")
 
 library(stargazer)
 cps08_no_na <- na.omit(cps08)
-stargazer(as.data.frame(cps08_no_na), type="text")
+stargazer(as.data.frame(cps08_no_na), type="text", out="cps_08_stats")
+
+# you can output html, tex, pdf, etc....
+stargazer(as.data.frame(cps08_no_na), type="html", out="cps_08_stats.html")
 
 cps08_bachmean <- cps08 %>%
   group_by(bachelor) %>%
@@ -61,6 +65,13 @@ cps08_bachmean <- cps08 %>%
   ungroup()
 cps08_bachmean
 
+# Stargazer plays well with regression analysis etc...
+
+# bivariate regression
+
+
+
+#
 
 # Here's where the spatial stuff starts
 
