@@ -67,10 +67,17 @@ cps08_bachmean
 
 # Stargazer plays well with regression analysis etc...
 
-# bivariate regression
+glimpse(cps08)
 
-
-
+m1 <- lm(ahe ~ age, data=cps08)
+m2 <- lm(ahe ~ age + factor(bachelor), data=cps08)
+m3 <- lm(ahe ~ age + factor(bachelor) + factor(female), data=cps08)
+m4 <- glm(factor(female) ~ ahe + factor(bachelor), family=binomial(link="logit"), data=cps08)
+stargazer(m1, m2, m3, m4, type="html", 
+          dep.var.labels=c("dep variable 1","dep variable 2"), 
+          covariate.labels=c("age","bachelor","gender"),
+          out="models.html")
+                                                                                       
 #
 
 # Here's where the spatial stuff starts
