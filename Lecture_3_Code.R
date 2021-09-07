@@ -1,5 +1,6 @@
 # Code for Exercises in Lecture 3: Spatial Econometrics
-# 9/10/19
+# Created: 9/10/19
+# Last Updated: 9/7/21
 # Author: Noel D. Johnson
 
 library(tidyverse)
