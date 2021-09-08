@@ -1,6 +1,6 @@
 # Code for Spatial Econometrics: Lecture 2
 # Created: 9/3/19
-# Last Updated: 9/1/21
+# Last Updated: 9/8/21
 # Author: Noel D. Johnson
 
 
@@ -54,10 +54,12 @@ cps08 <- read_csv("data/cps08.csv")
 
 library(stargazer)
 cps08_no_na <- na.omit(cps08)
-stargazer(as.data.frame(cps08_no_na), type="text", out="cps_08_stats")
+stargazer(as.data.frame(cps08_no_na), type="text",
+          out="cps_08_stats")
 
 # you can output html, tex, pdf, etc....
-stargazer(as.data.frame(cps08_no_na), type="html", out="cps_08_stats.html")
+stargazer(as.data.frame(cps08_no_na), type="html",
+          out="cps_08_stats.html")
 
 cps08_bachmean <- cps08 %>%
   group_by(bachelor) %>%
@@ -89,7 +91,7 @@ library(sf)
 library(stargazer)
 
 africa_sf <- st_read("data/africa_scale.shp")
-africa_sf
+glimpse(africa_sf)
 
 plot(africa_sf[64])
 
@@ -124,14 +126,15 @@ cities_sf <- st_as_sf(cities_csv,
 
 plot(cities_sf[1], axes = T, pch = 20,
      col = "black", main = "Cities")
-
 dev.off()
+
 # Plot the regions and cities together
 plot(africa_sf[6], axes = T,
      main = "WB Regions", key.pos = 1,
-     key.width = lcm(1.3), key.length = 1.0, reset=F)
+     key.width = lcm(1.3), key.length = 1.0, reset=T)
 plot(cities_sf[1], axes = T, pch = 20,
      col = "black", main = "Cities", add = TRUE)
+dev.off()
 
 # delete the existing proj.4 and epsg code
 africa_sf <- africa_sf %>% st_set_crs(NA)
@@ -189,7 +192,8 @@ dist_matrix
 dist_matrix <- dist_matrix %>%
   mutate(nameraw = nameraw)
 tt <- c(1:10)
-distances <- gather(dist_matrix, key = "distname", names(dist_matrix)[tt], value = "distance")
+distances <- gather(dist_matrix, key = "distname", names(dist_matrix)[tt],
+                    value = "distance")
 distances
 distance_Domoni <- distances %>% filter(nameraw=="Domoni")
 distance_Domoni
@@ -204,7 +208,8 @@ dist_matrix <- as_tibble(dist_matrix)
 dist_matrix <- dist_matrix %>%
   mutate(nameraw = nameraw)
 tt <- c(1:10)
-distances <- gather(dist_matrix, key = "distname", names(dist_matrix)[tt], value = "distance")
+distances <- gather(dist_matrix, key = "distname", names(dist_matrix)[tt],
+                    value = "distance")
 distance_Domoni <- distances %>% filter(nameraw=="Domoni")
 
 # End Code

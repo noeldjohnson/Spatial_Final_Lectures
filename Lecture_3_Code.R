@@ -70,13 +70,15 @@ par(mfrow=c(1,2))
 plot(st_sf(a = 1, p1), reset=F)
 plot(st_sf(b = 1:2, p1_fixed), key.pos=NULL, reset=F)
 
-# Simplifiying polygons and lines using Douglas-Peucker algorithm (not spatially aware)
+# Simplifiying polygons and lines using Douglas-Peucker
+# algorithm (not spatially aware)
 library(spData)
 usa_ea <- st_transform(us_states, 2163) #from spData
 usa_sf <- st_simplify(usa_ea, dTolerance = 1e+05)
 plot(usa_sf[1], col=NA, main="")
 
-# Simplifiying polygons and lines using rmapshaper package and Visvalingam algorithm, which is spatially aware
+# Simplifiying polygons and lines using rmapshaper package and 
+# Visvalingam algorithm, which is spatially aware
 library(rmapshaper)
 usa_ea$AREA = as.numeric(usa_ea$AREA) # kill units
 usa_ms <- ms_simplify(usa_ea, keep = 0.01)
@@ -95,7 +97,7 @@ plot(st_centroid(usa_ea)[1], col=2, add=T)
 
 # Clipping
 # Unions (dissolve)---pay attentionto slivers
-setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial_Fall_2019/Lectures/") 
+# setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial_Fall_2019/Lectures/") 
 africa_sf <- st_read("./data/africa_scale.shp", quiet = T)
 par(mfrow=c(1,2))
 plot(africa_sf[1], col=NA, main="Original", reset=F)
