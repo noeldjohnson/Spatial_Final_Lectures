@@ -70,6 +70,8 @@ par(mfrow=c(1,2))
 plot(st_sf(a = 1, p1), reset=F)
 plot(st_sf(b = 1:2, p1_fixed), key.pos=NULL, reset=F)
 
+### BEGIN HERE IN CLASS ######
+
 # Simplifiying polygons and lines using Douglas-Peucker
 # algorithm (not spatially aware)
 library(spData)
@@ -85,10 +87,13 @@ usa_ms <- ms_simplify(usa_ea, keep = 0.01)
 plot(usa_ms[1], col=NA, main="")
 
 # Centroids
-par(mfrow=c(1,1))
+dev.off()
+par(mfrow=c(2,1))
 plot(usa_ea[1], col=NA, main="", reset=F)
 plot(st_centroid(usa_ea), col=2, add=T)
+plot(usa_ea[1], col=NA, main="", reset=F)
 plot(st_point_on_surface(usa_ea), col=3, add=T)
+dev.off()
 
 # Buffers (be careful about CRS---sometimes must project using buffers)
 buff_sf <- st_centroid(usa_ea) %>% st_buffer(dist = 1e5)
