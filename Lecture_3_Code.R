@@ -172,6 +172,7 @@ afr_sf <- st_read("./data/africa_bnds.shp", quiet = T,
                   stringsAsFactors = F)
 # join
 afr_ctys_1 <- afr_ctys %>% st_join(afr_sf)
+plot(afr_ctys_1[3], reset=T)
 
 # filter out disagreements (that is, just keep disagreements)
 afr_ctys_1 <- afr_ctys_1 %>% filter(iso3v10!=adm0_a3)
