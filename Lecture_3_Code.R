@@ -76,22 +76,23 @@ plot(st_sf(b = 1:2, p1_fixed), key.pos=NULL, reset=F)
 # algorithm (not spatially aware)
 library(spData)
 usa_ea <- st_transform(us_states, 2163) #from spData
+plot(usa_ea[7], col=NA, main="")
 usa_sf <- st_simplify(usa_ea, dTolerance = 1e+05)
-plot(usa_sf[1], col=NA, main="")
+plot(usa_sf[7], col=NA, main="")
 
 # Simplifiying polygons and lines using rmapshaper package and 
 # Visvalingam algorithm, which is spatially aware
 library(rmapshaper)
 usa_ea$AREA = as.numeric(usa_ea$AREA) # kill units
 usa_ms <- ms_simplify(usa_ea, keep = 0.01)
-plot(usa_ms[1], col=NA, main="")
+plot(usa_ms[2], col=NA, main="")
 
 # Centroids
 dev.off()
-par(mfrow=c(2,1))
+par(mfrow=c(1,1))
 plot(usa_ea[1], col=NA, main="", reset=F)
 plot(st_centroid(usa_ea), col=2, add=T)
-plot(usa_ea[1], col=NA, main="", reset=F)
+# plot(usa_ea[1], col=NA, main="", reset=F)
 plot(st_point_on_surface(usa_ea), col=3, add=T)
 dev.off()
 
@@ -101,7 +102,7 @@ plot(buff_sf[1], col=NA, reset=F, main="")
 plot(st_centroid(usa_ea)[1], col=2, add=T)
 
 # Clipping
-# Unions (dissolve)---pay attentionto slivers
+# Unions (dissolve)---pay attention to slivers
 # setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial_Fall_2019/Lectures/") 
 africa_sf <- st_read("./data/africa_scale.shp", quiet = T)
 par(mfrow=c(1,2))
