@@ -76,36 +76,36 @@ plot(st_sf(b = 1:2, p1_fixed), key.pos=NULL, reset=F)
 # algorithm (not spatially aware)
 library(spData)
 usa_ea <- st_transform(us_states, 2163) #from spData
+plot(usa_ea[7], col=NA, main="")
 usa_sf <- st_simplify(usa_ea, dTolerance = 1e+05)
-plot(usa_sf[1], col=NA, main="")
+plot(usa_sf[7], col=NA, main="")
 
 # Simplifiying polygons and lines using rmapshaper package and 
 # Visvalingam algorithm, which is spatially aware
 library(rmapshaper)
 usa_ea$AREA = as.numeric(usa_ea$AREA) # kill units
 usa_ms <- ms_simplify(usa_ea, keep = 0.01)
-plot(usa_ms[1], col=NA, main="")
+plot(usa_ms[2], col=NA, main="")
 
 # Centroids
 dev.off()
-par(mfrow=c(2,1))
+par(mfrow=c(1,1))
 plot(usa_ea[1], col=NA, main="", reset=F)
 plot(st_centroid(usa_ea), col=2, add=T)
-plot(usa_ea[1], col=NA, main="", reset=F)
+# plot(usa_ea[1], col=NA, main="", reset=F)
 plot(st_point_on_surface(usa_ea), col=3, add=T)
 dev.off()
 
 # Buffers (be careful about CRS---sometimes must project using buffers)
 buff_sf <- st_centroid(usa_ea) %>% st_buffer(dist = 1e5)
-plot(buff_sf[1], col=NA, reset=F, main="")
-plot(st_centroid(usa_ea)[1], col=2, add=T)
+plot(buff_sf[7], col=NA, reset=F, main="")
+plot(st_centroid(usa_ea)[7], col=2, add=T)
 
 # Clipping
-# Unions (dissolve)---pay attentionto slivers
-# setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial_Fall_2019/Lectures/") 
+# Unions (dissolve)---pay attention to slivers
 africa_sf <- st_read("./data/africa_scale.shp", quiet = T)
 par(mfrow=c(1,2))
-plot(africa_sf[1], col=NA, main="Original", reset=F)
+plot(africa_sf[64], col=NA, main="Original", reset=F)
 plot(st_union(africa_sf), col=NA, main="Union")
 
 # Use group and summarize for unions
@@ -142,11 +142,12 @@ kenya_rds <- st_crop(afr_rds, kenya)
 # Cropped roads and Kenyan boundaries
 par(mfrow=c(1,1))
 plot(kenya_rds[1], main="", reset=F,
-     key.pos = NULL, axes=T)
+     key.pos = 3, axes=T)
 plot(kenya[1], col=NA, lwd=2, add=T)
 
 
 # Spatial subsetting
+dev.off()
 par(mfrow=c(1,2))
 plot(kenya_rds[kenya, "type", op = st_within],
      main="", key.pos=NULL, axes=T, reset=F)
@@ -155,8 +156,11 @@ plot(kenya_rds["type"],
      main="", key.pos=NULL, axes=T, reset=F)
 plot(kenya[1], col=NA, lwd=2, add=T)
 
+# Spatial subsetting into a new object
 names(kenya_rds)
-test <- kenya_rds[kenya, c("type", "adm0_a3"), op = st_within]
+kenya_rds_within <- kenya_rds[kenya, c("type", "adm0_a3"),
+                              op = st_within]
+class(kenya_rds_within)
 
 # Spatial joins with topological operations
 # Load in data and clean up variables
@@ -168,6 +172,7 @@ afr_sf <- st_read("./data/africa_bnds.shp", quiet = T,
                   stringsAsFactors = F)
 # join
 afr_ctys_1 <- afr_ctys %>% st_join(afr_sf)
+plot(afr_ctys_1[3], reset=T)
 
 # filter out disagreements (that is, just keep disagreements)
 afr_ctys_1 <- afr_ctys_1 %>% filter(iso3v10!=adm0_a3)
