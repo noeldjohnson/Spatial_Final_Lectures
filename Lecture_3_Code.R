@@ -172,7 +172,7 @@ afr_sf <- st_read("./data/africa_bnds.shp", quiet = T,
                   stringsAsFactors = F)
 # join
 afr_ctys_1 <- afr_ctys %>% st_join(afr_sf)
-plot(afr_ctys_1[3], reset=T)
+plot(afr_ctys_1[2], reset=T)
 
 # filter out disagreements (that is, just keep disagreements)
 afr_ctys_1 <- afr_ctys_1 %>% filter(iso3v10!=adm0_a3)
@@ -185,9 +185,8 @@ bangui <- afr_ctys_1 %>% filter(name == "Bangui")
 
 # What’s going on?
 plot(bangui[1], reset=F, main="Geocoding mismatch")
-plot(afr_sf[1], add=T)
+plot(afr_sf[1], main="Geocoding mismatch", add=T)
 plot(bangui[1], col=2, pch=20, add=T)
-plot(st_point(c(18.558,4.395)), col=3, pch=20, add=T)
 # I googled the coordinates and got these...
 plot(st_point(c(18.563,4.373)), col=4, pch=20, add=T)
 
@@ -195,10 +194,10 @@ plot(st_point(c(18.563,4.373)), col=4, pch=20, add=T)
 # Let's try the previous operation using st_intersection()
 # st_intersection (same as inner join)
 afr_ctys_2 <- afr_ctys %>% st_intersection(afr_sf)
-# kill disagreements
-afr_ctys_2 <- afr_ctys_2 %>% filter(iso3v10!=adm0_a3)
-# compare to st_join after filtering
-nrow(afr_ctys_1) == nrow(afr_ctys_2)
+view(afr_ctys_2)
+afr_ctys_2$iso3v10==afr_ctys_2$adm0_a3
+# Remember that you're losing data!!!!
+
 
 # Creating grids
 # back to degrees
