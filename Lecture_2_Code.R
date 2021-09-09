@@ -47,7 +47,7 @@ cps08
 
 
 mutate(cps08, agesq = age^2)
-
+## Begin Here
 # you can use stargazer to summarize variables
 
 cps08 <- read_csv("data/cps08.csv")
