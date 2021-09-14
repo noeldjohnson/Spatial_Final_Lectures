@@ -165,7 +165,7 @@ plot(potato.france.mask, col = gray.colors(25, start = .1, end = .9))
 
 # 2. Extracting raster values using vector data
 # Load in modern country boders
-modern_borders <- st_read("Modern Europe Projected.shp")
+modern_borders <- st_read("./data/Modern Europe Projected.shp")
 modern_borders <- st_transform(modern_borders, 4326)
 modern_borders
 plot(modern_borders[1], col=NA)
