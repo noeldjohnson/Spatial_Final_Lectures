@@ -139,7 +139,7 @@ plot(r.foc, col = gray.colors(25, start = .1, end = .9))
 
 # The raster package only deals with sp-objects and does not understand simple 
 # features. You can easily coerce one to the other:
-modern_borders <- st_read("Modern Europe Projected.shp")
+modern_borders <- st_read("./data/Modern Europe Projected.shp")
 modern_borders <- st_transform(modern_borders, 4326)
 modern_borders
 plot(modern_borders[1], col=NA)
