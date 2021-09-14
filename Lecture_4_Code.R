@@ -1,6 +1,7 @@
 # Code for Spatial Econometrics: Lecture 4 "Rasters"
-# 9/17/19
-# Author: Noel D. Johnson
+# Created: 9/17/19
+# Last Updated: 9/13/21
+# Author: Noel Johnson
 
 library(raster)
 library(tidyverse)
