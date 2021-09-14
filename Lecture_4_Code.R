@@ -4,13 +4,15 @@
 # Author: Noel Johnson
 
 library(raster)
+library(rgdal)
 library(tidyverse)
 library(sf)
 library(stargazer)
 
+
 # Reading and writing rasters
 # setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial_Fall_2019/Lectures/")
-r.potato_world <- raster(data/"GAEZ_potato_suit.tif")
+r.potato_world <- raster("./data/GAEZ_potato_suit.tif")
 # Small rasters go into RAM, the rest stay on disk
 inMemory(r.potato_world)
 r.potato_world
