@@ -47,6 +47,7 @@ cps08
 
 
 mutate(cps08, agesq = age^2)
+
 ## Begin Here
 # you can use stargazer to summarize variables
 
@@ -58,8 +59,8 @@ stargazer(as.data.frame(cps08_no_na), type="text",
           out="cps_08_stats")
 
 # you can output html, tex, pdf, etc....
-stargazer(as.data.frame(cps08_no_na), type="html",
-          out="cps_08_stats.html")
+stargazer(as.data.frame(cps08_no_na), type="latex",
+          out="cps_08_stats.tex")
 
 cps08_bachmean <- cps08 %>%
   group_by(bachelor) %>%
@@ -110,7 +111,8 @@ africa_sf <- africa_sf %>%
 names(africa_sf)[6]
 
 # Make a fast and easy plot
-plot(africa_sf["pop_est"], reset=F)
+dev.off()
+plot(africa_sf[6], reset=F)
 
 # read the csv of african cities
 cities_csv <- read_csv("data/africa_cities.csv")
@@ -129,8 +131,9 @@ plot(cities_sf[1], axes = T, pch = 20,
 dev.off()
 
 # Plot the regions and cities together
+glimpse(africa_sf)
 plot(africa_sf[6], axes = T,
-     main = "WB Regions", key.pos = 1,
+     main = "", key.pos = 1,
      key.width = lcm(1.3), key.length = 1.0, reset=T)
 plot(cities_sf[1], axes = T, pch = 20,
      col = "black", main = "Cities", add = TRUE)
