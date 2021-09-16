@@ -19,6 +19,10 @@ class(w_sfg)
 points_sfc <- st_sfc(h_sfg, g_sfg, w_sfg, crs = 4326)
 class(points_sfc)
 
+# points_sfc is actually a list. Lists are used a lot in R and worth reading
+# about in Wickham's R for Data Science
+print(points_sfc)
+
 # Understanding sf objects
 # Create a simple feature object
 tbl <- tibble(name = c("Hannover", "Göttingen",
