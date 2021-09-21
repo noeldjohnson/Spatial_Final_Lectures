@@ -101,10 +101,8 @@ plot(r.potato.moll, col = gray.colors(25, start = .1, end = .9))
 
 #Map algebra divides raster operations into four subclasses:
 # 1. Local or per-cell operations (e.g. dividing two rasters cell-by-cell)
-# 2. Focal or neighborhood operations. Most often the output cell value is the 
-# result of a 3 x 3 input cell block.
-# 3. Zonal operations are similar to focal operations but any irregular size or 
-# shape is the basis of the calculations. 
+# 2. Focal or neighborhood operations. Most often the output cell value is the result of a 3 x 3 input cell block.
+# 3. Zonal operations are similar to focal operations but any irregular size or shape is the basis of the calculations. 
 # 4. Global or per-raster operations are essentially summary stats.
 
 # Local operations
@@ -124,10 +122,8 @@ r.foc <- focal(r.potato, fun = min,
 plot(r.foc, col = gray.colors(25, start = .1, end = .9))
 
 # Zonal operations
-#Zonal statistics summarize the values of one raster layer by values (“zones”) 
-# of another raster of the same extent. For large rasters, the function only 
-# takes predefined functions in characters: “mean”, “sd”, “min”, “max”, “sum” 
-# or “count”.
+#Zonal statistics summarize the values of one raster layer by values (“zones”) of another raster of the same extent. For large rasters, the function only. 
+# Takes predefined functions in characters: “mean”, “sd”, “min”, “max”, “sum” or “count”.
 
 # Vector-raster interactions
 # Three Main Techniques
@@ -135,8 +131,7 @@ plot(r.foc, col = gray.colors(25, start = .1, end = .9))
 # 2. Extracting raster values using vector data
 # 3. Raster-vector conversion
 
-# The raster package only deals with sp-objects and does not understand simple 
-# features. You can easily coerce one to the other:
+# The raster package only deals with sp-objects and does not understand simple features. You can easily coerce one to the other:
 modern_borders <- st_read("./data/Modern Europe Projected.shp")
 modern_borders <- st_transform(modern_borders, 4326)
 modern_borders
@@ -173,9 +168,7 @@ modern_borders$mean_pot_suit <- raster::extract(r.potato, modern_borders,
                                                 fun=mean, na.rm=TRUE)
 
 # 3. Raster-vector conversion
-# Vectorization is the conversion of raster objects into their representation 
-# in vector form. Two common conversions are raster to points and raster to 
-# polygons. Here are two examples:
+# Vectorization is the conversion of raster objects into their representation in vector form. Two common conversions are raster to points and raster to polygons. Here are two examples:
 
 # kill all zeros
 r.potato <- reclassify(r.potato, c(-Inf,0,NA))
@@ -184,8 +177,7 @@ v.potato <- rasterToPoints(r.potato, spatial = T) %>% st_as_sf()
 plot(v.potato)
 
 # Rasterization
-# Rasterization is the conversion of vector objects into their representation 
-# in raster objects.
+# Rasterization is the conversion of vector objects into their representation in raster objects.
 
 #
 
