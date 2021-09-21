@@ -171,10 +171,10 @@ modern_borders$mean_pot_suit <- raster::extract(r.potato, modern_borders,
 # Vectorization is the conversion of raster objects into their representation in vector form. Two common conversions are raster to points and raster to polygons. Here are two examples:
 
 # kill all zeros
-r.potato <- reclassify(r.potato, c(-Inf,0,NA))
+potato.france.mask <- reclassify(potato.france.mask, c(-Inf,0,NA))
 # to points
-v.potato <- rasterToPoints(r.potato, spatial = T) %>% st_as_sf()
-plot(v.potato)
+v.potato.france.mask <- rasterToPoints(potato.france.mask, spatial = T) %>% st_as_sf()
+plot(v.potato.france.mask, pch=19, cex=.25)
 
 # Rasterization
 # Rasterization is the conversion of vector objects into their representation in raster objects.
