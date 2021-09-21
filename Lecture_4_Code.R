@@ -1,6 +1,6 @@
 # Code for Spatial Econometrics: Lecture 4 "Rasters"
 # Created: 9/17/19
-# Last Updated: 9/13/21
+# Last Updated: 9/20/21
 # Author: Noel Johnson
 
 library(raster)
@@ -75,8 +75,7 @@ quantile(r.potato) # all data
 hist(r.potato, freq=F)
 
 # Aggregating and disaggregating
-# Changing the raster resolution can save disk space and computational time, or 
-# allow for the calculation of smaller areas.
+# Changing the raster resolution can save disk space and computational time
 fact_2 <- aggregate(r.potato, fact=2, fun=mean) # or sum etc
 fact_10 <- aggregate(r.potato, fact=10, fun=mean)
 fact_25 <- aggregate(r.potato, fact=25, fun=mean)
@@ -87,8 +86,7 @@ plot(fact_10, col = gray.colors(10, start = .1, end = .9))
 plot(fact_25, col = gray.colors(25, start = .1, end = .9))
 
 # Projections and transformations
-#Contrary to vector data, projecting raster data backwards and forwards is not 
-# lossless
+#Contrary to vector data, projecting raster data backwards and forwards is not lossless
 
 projection(r.potato)
 
