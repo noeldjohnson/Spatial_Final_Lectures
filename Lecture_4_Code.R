@@ -86,7 +86,8 @@ plot(fact_10, col = gray.colors(10, start = .1, end = .9))
 plot(fact_25, col = gray.colors(25, start = .1, end = .9))
 
 # Projections and transformations
-#Contrary to vector data, projecting raster data backwards and forwards is not lossless
+# Contrary to vector data, projecting raster data backwards and forwards is not
+# lossless
 
 projection(r.potato)
 
@@ -97,7 +98,7 @@ projection(r.potato.moll)
 ## [1] "+proj=moll +ellps=WGS84"
 plot(r.potato.moll, col = gray.colors(25, start = .1, end = .9))
 
-# Resampling (goto slides---important information)
+# Resampling (goto slides)
 
 #Map algebra divides raster operations into four subclasses:
 # 1. Local or per-cell operations (e.g. dividing two rasters cell-by-cell)

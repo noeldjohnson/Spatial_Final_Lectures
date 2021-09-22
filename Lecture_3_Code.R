@@ -79,10 +79,12 @@ plot(st_sf(b = 1:2, p1_fixed), key.pos=NULL, reset=F)
 # Simplifiying polygons and lines using Douglas-Peucker
 # algorithm (not spatially aware)
 library(spData)
+dev.off()
 usa_ea <- st_transform(us_states, 2163) #from spData
 plot(usa_ea[7], col=NA, main="")
-usa_sf <- st_simplify(usa_ea, dTolerance = 1e+05)
+usa_sf <- st_simplify(usa_ea, dTolerance = 10000)
 plot(usa_sf[7], col=NA, main="")
+# st_is_valid(usa_sf, reason = T)
 
 # Simplifiying polygons and lines using rmapshaper package and 
 # Visvalingam algorithm, which is spatially aware
@@ -104,6 +106,8 @@ dev.off()
 buff_sf <- st_centroid(usa_ea) %>% st_buffer(dist = 1e5)
 plot(buff_sf[7], col=NA, reset=F, main="")
 plot(st_centroid(usa_ea)[7], col=2, add=T)
+st_crs(usa_ea)
+
 
 # Clipping
 # Unions (dissolve)---pay attention to slivers
@@ -176,7 +180,7 @@ afr_sf <- st_read("./data/africa_bnds.shp", quiet = T,
                   stringsAsFactors = F)
 # join
 afr_ctys_1 <- afr_ctys %>% st_join(afr_sf)
-plot(afr_ctys_1[2], reset=T)
+plot(afr_ctys_1[5], reset=T)
 
 # filter out disagreements (that is, just keep disagreements)
 afr_ctys_1 <- afr_ctys_1 %>% filter(iso3v10!=adm0_a3)
@@ -188,8 +192,9 @@ glimpse(afr_ctys_1 %>% filter(admin != "Morocco"))
 bangui <- afr_ctys_1 %>% filter(name == "Bangui")
 
 # What’s going on?
+dev.off()
 plot(bangui[1], reset=F, main="Geocoding mismatch")
-plot(afr_sf[1], main="Geocoding mismatch", add=T)
+plot(afr_sf[1], main="Geocoding mismatch", add=TRUE)
 plot(bangui[1], col=2, pch=20, add=T)
 # I googled the coordinates and got these...
 plot(st_point(c(18.563,4.373)), col=4, pch=20, add=T)
