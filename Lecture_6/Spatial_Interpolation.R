@@ -81,6 +81,10 @@ tm_shape(modern_borders_clip) + tm_polygons() +
   tm_legend(legend.outside=FALSE, legend.position = c("left", "center"))
 
 
+#####
+# BEGIN HERE BY EXPANDING ON THIS COMMENT (AND MANY OF THOSE BELOW IT)
+####
+
 # Calculate optimal IDW power
 library(gstat) # Use gstat's idw routine
 library(sp)    # Used for the spsample function
@@ -125,6 +129,7 @@ tm_shape(mort_274_raster_clip) +
   tm_shape(modern_borders_clip_sp) + tm_dots(NA) +
   tm_legend(legend.outside=FALSE, legend.position = c("left", "center"))
 
+
 ## Fine-tuning the interpolation
 
 # Leave-one-out validation routine
@@ -140,7 +145,6 @@ plot(IDW.out ~ Mort_274_spatial_proj_sp$mortality, asp=1, xlab="Observed", ylab=
 abline(lm(IDW.out ~ Mort_274_spatial_proj_sp$mortality), col="red", lw=2,lty=2)
 abline(0,1)
 par(OP)
-
 
 
 model1 <- lm(IDW.out ~ Mort_274_spatial_proj_sp$mortality)
