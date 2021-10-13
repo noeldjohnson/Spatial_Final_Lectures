@@ -12,7 +12,7 @@ library(skimr)
 library(viridis)
 
 # Set your working directory
-setwd("/Users/noeljohnson/Desktop/Lecture_6/")
+setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial Fall2021/Spatial_Final_Lectures/Lecture_6")
 
 # Load data
 ## Load in City Data and Project
