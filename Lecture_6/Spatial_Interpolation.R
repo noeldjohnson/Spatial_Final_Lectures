@@ -29,6 +29,8 @@ Mort_274_spatial <- st_as_sf(Mort_274, coords = c("longitude", "latitude"), crs 
 
 # Project it
 Mort_274_spatial_proj <- st_transform(Mort_274_spatial, EEC)
+
+# Make a simple plot
 plot(Mort_274_spatial_proj["mortality"], reset = FALSE)
 
 
