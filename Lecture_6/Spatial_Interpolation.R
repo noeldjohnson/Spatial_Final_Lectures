@@ -105,7 +105,7 @@ Mort_274_spatial_proj_sp = as(Mort_274_spatial_proj, Class = "Spatial") # Conver
 grd              <- as.data.frame(spsample(bbox_sp, "regular", n=50000))
 # change the variable names of grd
 names(grd)       <- c("X", "Y")
-# tell R that those variable names coorespond to coordinates
+# tell R that those variable names correspond to coordinates
 coordinates(grd) <- c("X", "Y")
 # change the lattice of points into a grid
 gridded(grd)     <- TRUE  # Create SpatialPixel object. SpatialPixels stores the x and y coordinates for each pixel, unless the pixel value is NA.
