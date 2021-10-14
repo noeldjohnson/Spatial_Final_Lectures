@@ -135,7 +135,44 @@ tm_shape(mort_274_raster_clip) +
 
 
 # Fine-tuning the interpolation by calculating the optimal IDW power
+# Cross-validation 1
 
+# Estimate the optimal power ("idp") using a leave-one-out validation routine
+epsilon <- seq(0.01, 3, .01)
+IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
+RMSE.out <- vector(length = length(epsilon))
+idw.power <- vector(length = length(epsilon))
+
+for (j in  1:length(epsilon)) {
+  for (i in 1:length(Mort_274_spatial_proj_sp)) {
+    IDW.out[i] <- idw(mortality ~ 1, Mort_274_spatial_proj_sp[-i,], Mort_274_spatial_proj_sp[i,], idp=epsilon[j])$var1.pred
+  }
+  RMSE.out[j] <-  sqrt( sum((IDW.out - Mort_274_spatial_proj_sp$mortality)^2) / length(Mort_274_spatial_proj_sp))
+  idw.power[j] <- epsilon[j]
+}
+
+df <- data.frame(idw.power, RMSE.out)
+idw.power.name <- "power"
+RMSE.name <- "RMSE"
+names(df) <- c(idw.power.name, RMSE.name)  
+
+optimal <- df[which.min(df$RMSE),]
+optimal
+
+gg <- ggplot(df, aes(x=power, y=RMSE)) + 
+  geom_point() + 
+  #geom_smooth(method="loess", se=F) + 
+  labs(subtitle="Power vs RMSE", 
+       y="RMSE", 
+       x="Power")
+gg
+
+
+
+
+
+
+# Cross Validation II (a more Arrgh-y way to do things...)
 # Leave-one-out validation routine
 IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
 for (i in 1:length(Mort_274_spatial_proj_sp)) {
@@ -156,18 +193,25 @@ summary(model1)
 # Compute RMSE
 sqrt( sum((IDW.out - Mort_274_spatial_proj_sp$mortality)^2) / length(Mort_274_spatial_proj_sp))
 
-## Cross-validation 1
+# End Code
 
-# Estimate the optimal power ("idp") using a cross-validation technique
 
-# Leave-one-out validation routine
-step <- 10
-res <- 3
+
+
+
+
+
+
+
+# Estimate the optimal power ("idp") using a leave-one-out validation routine
+epsilon <- seq(.01, 4, .01)
+# step <- 100
+# res <- 25
 IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
 RMSE.out <- vector(length = step)
 idw.power <- vector(length = step)
 
-for (j in 1:step) {
+for (j in 1:length(epsilon)) {
   for (i in 1:length(Mort_274_spatial_proj_sp)) {
     IDW.out[i] <- idw(mortality ~ 1, Mort_274_spatial_proj_sp[-i,], Mort_274_spatial_proj_sp[i,], idp=j/res)$var1.pred
   }
@@ -190,19 +234,6 @@ gg <- ggplot(df, aes(x=power, y=RMSE)) +
        y="RMSE", 
        x="Power")
 gg
-
-
-# End Code
-
-
-
-
-
-
-
-
-
-
 
 
 
