@@ -133,7 +133,6 @@ tm_shape(mort_274_raster_clip) +
   tm_shape(modern_borders_clip_sp) + tm_dots(NA) +
   tm_legend(legend.outside=FALSE, legend.position = c("left", "center"))
 
-
 # Estimate the optimal power ("idp") using a leave-one-out validation routine
 epsilon <- seq(0.7, 2.5, .1)
 IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
@@ -142,7 +141,7 @@ idw.power <- vector(length = length(epsilon))
 
 for (j in  1:length(epsilon)) {
   for (i in 1:length(Mort_274_spatial_proj_sp)) {
-    IDW.out[i] <- idw(mortality ~ 1, Mort_274_spatial_proj_sp[-i,], Mort_274_spatial_proj_sp[i,], idp=epsilon[j])$var1.pred
+    IDW.out[i] <- idw(mortality ~ 1, Mort_274_spatial_proj_sp[-i,], Mort_274_spatial_proj_sp[i,], idp=epsilon[j])$var1.pred # you need the var1.pred because the idw procedure produces an sp object called a spatialgriddataframe. var1.pred is the name of the variable in the data frame where the idw predictions are stored
   }
   RMSE.out[j] <-  sqrt( sum((IDW.out - Mort_274_spatial_proj_sp$mortality)^2) / length(Mort_274_spatial_proj_sp))
   idw.power[j] <- epsilon[j]
@@ -164,13 +163,7 @@ gg <- ggplot(df, aes(x=power, y=RMSE)) +
        x="Power")
 gg
 
-
-
-
-
-
-# Cross Validation II (a more Arrgh-y way to do things...)
-# Leave-one-out validation routine
+# make a plot of the predictions vs the actual values using the optimal power of 1.76
 IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
 for (i in 1:length(Mort_274_spatial_proj_sp)) {
   IDW.out[i] <- idw(mortality ~ 1, Mort_274_spatial_proj_sp[-i,], Mort_274_spatial_proj_sp[i,], idp=1.76)$var1.pred
@@ -187,8 +180,14 @@ par(OP)
 model1 <- lm(IDW.out ~ Mort_274_spatial_proj_sp$mortality)
 summary(model1)
 
-# Compute RMSE
-sqrt( sum((IDW.out - Mort_274_spatial_proj_sp$mortality)^2) / length(Mort_274_spatial_proj_sp))
+
+#
+
+
+
+
+
+
 
 # End Code
 
@@ -199,38 +198,6 @@ sqrt( sum((IDW.out - Mort_274_spatial_proj_sp$mortality)^2) / length(Mort_274_sp
 
 
 
-
-# Estimate the optimal power ("idp") using a leave-one-out validation routine
-epsilon <- seq(.01, 4, .01)
-# step <- 100
-# res <- 25
-IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
-RMSE.out <- vector(length = step)
-idw.power <- vector(length = step)
-
-for (j in 1:length(epsilon)) {
-  for (i in 1:length(Mort_274_spatial_proj_sp)) {
-    IDW.out[i] <- idw(mortality ~ 1, Mort_274_spatial_proj_sp[-i,], Mort_274_spatial_proj_sp[i,], idp=j/res)$var1.pred
-  }
-  RMSE.out[j] <-  sqrt( sum((IDW.out - Mort_274_spatial_proj_sp$mortality)^2) / length(Mort_274_spatial_proj_sp))
-  idw.power[j] <- j/res
-}
-
-df <- data.frame(idw.power, RMSE.out)
-idw.power.name <- "power"
-RMSE.name <- "RMSE"
-names(df) <- c(idw.power.name, RMSE.name)  
-
-optimal <- df[which.min(df$RMSE),]
-optimal
-
-gg <- ggplot(df, aes(x=power, y=RMSE)) + 
-  geom_point() + 
-  #geom_smooth(method="loess", se=F) + 
-  labs(subtitle="Power vs RMSE", 
-       y="RMSE", 
-       x="Power")
-gg
 
 
 
