@@ -135,7 +135,7 @@ tm_shape(mort_274_raster_clip) +
 
 
 # Estimate the optimal power ("idp") using a leave-one-out validation routine
-epsilon <- seq(0.01, 2.5, .01)
+epsilon <- seq(0.7, 2.5, .1)
 IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
 RMSE.out <- vector(length = length(epsilon))
 idw.power <- vector(length = length(epsilon))
