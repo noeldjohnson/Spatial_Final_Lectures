@@ -19,7 +19,7 @@ setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial Fall2021/Spatial_Final_Lectur
 ### Three data sets: (1) Mort274.csv, (2) cities_for_map1801.csv, (3) ModernCountries/Modern Europe Projected.shp
 
 # Assign projection you'll use to a vairable 
-EEC <- "+proj=eqdc +lat_0=0 +lon_0=0 +lat_1=43 +lat_2=62 +x_0=0 +y_0=0 +ellps=intl +units=m +no_defs"
+EEC <- "+proj=eqdc +lat_0=0 +lon_0=0 +lat_1=43 +lat_2=62 +x_0=0 +y_0=0 +ellps=intl +units=m +no_defs +datum=WGS84"
 
 # Load in the .csv for the 274 mortality cities
 Mort_274 <- read.csv("Data/Mort274.csv")
@@ -81,42 +81,46 @@ tm_shape(modern_borders_clip) + tm_polygons() +
   tm_legend(legend.outside=FALSE, legend.position = c("left", "center"))
 
 
-#####
-# BEGIN HERE BY EXPANDING ON THIS COMMENT (AND MANY OF THOSE BELOW IT)
-####
+# Use known mortality cities to interpolate predicted mortality for the surrounding grid cells. Use an inverse distance weighting procedure to do this. We will start with the optimal weight (as calculated using a cross-validation technique). Will actually execute the cross validation technique below in a later code block.
 
-# Calculate optimal IDW power
 library(gstat) # Use gstat's idw routine
 library(sp)    # Used for the spsample function
 
-# Make a bounding box around modern_borders_clip
+# Make a bounding box around modern_borders_clip. This will serve as the border for our grid.
 bbox <- st_make_grid(modern_borders_clip, n=1)
+# check the coordinates
 bbox
+#  make a plot of the borders
 plot(modern_borders_clip["name"], col=NA, reset = FALSE)
+# and add the bounding box we just made.
 plot(bbox, add = TRUE)
 
-# Transform the 3 shape files from sf to sp objects
+# Transform the 3 shape files from sf to sp objects. We need to do this in order to use the spsample package.
 modern_borders_clip_sp = as(modern_borders_clip, Class = "Spatial") # Convert from sf to sp
 bbox_sp = as(bbox, Class = "Spatial") # Convert from sf to sp
 Mort_274_spatial_proj_sp = as(Mort_274_spatial_proj, Class = "Spatial") # Convert from sf to sp
 
 # Create an empty grid where n is the total number of cells
+# create a gridded sample of 50000 points in the bounding box
 grd              <- as.data.frame(spsample(bbox_sp, "regular", n=50000))
+# change the variable names of grd
 names(grd)       <- c("X", "Y")
+# tell R that those variable names coorespond to coordinates
 coordinates(grd) <- c("X", "Y")
-gridded(grd)     <- TRUE  # Create SpatialPixel object
-fullgrid(grd)    <- TRUE  # Create SpatialGrid object
+# change the lattice of points into a grid
+gridded(grd)     <- TRUE  # Create SpatialPixel object. SpatialPixels stores the x and y coordinates for each pixel, unless the pixel value is NA.
+fullgrid(grd)    <- TRUE  # Create SpatialGrid object. SpatialGrid objects store the grid geometry in a GridTopology class which is a few numbers defining the grid size and dimensions.
 
 # Add modern_borders_clip_sp projection information to the empty grid
 proj4string(grd) <- proj4string(modern_borders_clip_sp)
 
+# plot it
 plot(modern_borders_clip_sp, reset = TRUE)
 plot(grd, add = TRUE)
 
 
-# Interpolate the grid cells using the optimal power of 1.76 (idp=1.76)
+# Interpolate the grid cells using the optimal power (see below) of 1.76 (idp=1.76). "mortality ~ 1" tells the function to run a linear idw procedure using just the nearby values of mortality to predict the own cell value for mortality (as opposed to when you might know other variables should predict mortality, x ~ y + z). "idp" is the "power". Higher values mean further away observations get less weight. See: https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/how-idw-works.htm and https://www.geo.fu-berlin.de/en/v/soga/Geodata-analysis/geostatistics/Inverse-Distance-Weighting/index.html
 mortality_274_idw <- gstat::idw(mortality ~ 1, Mort_274_spatial_proj_sp, newdata=grd, idp=1.76)
-
 
 # Convert to raster object then clip
 mort_274_raster       <- raster(mortality_274_idw)
@@ -130,7 +134,7 @@ tm_shape(mort_274_raster_clip) +
   tm_legend(legend.outside=FALSE, legend.position = c("left", "center"))
 
 
-## Fine-tuning the interpolation
+# Fine-tuning the interpolation by calculating the optimal IDW power
 
 # Leave-one-out validation routine
 IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
@@ -145,7 +149,6 @@ plot(IDW.out ~ Mort_274_spatial_proj_sp$mortality, asp=1, xlab="Observed", ylab=
 abline(lm(IDW.out ~ Mort_274_spatial_proj_sp$mortality), col="red", lw=2,lty=2)
 abline(0,1)
 par(OP)
-
 
 model1 <- lm(IDW.out ~ Mort_274_spatial_proj_sp$mortality)
 summary(model1)
