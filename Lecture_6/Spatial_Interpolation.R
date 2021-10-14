@@ -134,9 +134,6 @@ tm_shape(mort_274_raster_clip) +
   tm_legend(legend.outside=FALSE, legend.position = c("left", "center"))
 
 
-# Fine-tuning the interpolation by calculating the optimal IDW power
-# Cross-validation 1
-
 # Estimate the optimal power ("idp") using a leave-one-out validation routine
 epsilon <- seq(0.01, 3, .01)
 IDW.out <- vector(length = length(Mort_274_spatial_proj_sp))
