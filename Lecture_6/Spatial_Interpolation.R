@@ -122,7 +122,7 @@ plot(grd, add = TRUE)
 # Interpolate the grid cells using the optimal power (see below) of 1.76 (idp=1.76). "mortality ~ 1" tells the function to run a linear idw procedure using just the nearby values of mortality to predict the own cell value for mortality (as opposed to when you might know other variables should predict mortality, x ~ y + z). "idp" is the "power". Higher values mean further away observations get less weight. See: https://desktop.arcgis.com/en/arcmap/10.3/tools/3d-analyst-toolbox/how-idw-works.htm and https://www.geo.fu-berlin.de/en/v/soga/Geodata-analysis/geostatistics/Inverse-Distance-Weighting/index.html
 mortality_274_idw <- gstat::idw(mortality ~ 1, Mort_274_spatial_proj_sp, newdata=grd, idp=1.76)
 
-# Convert to raster object then clip
+# Convert to raster object then mask
 mort_274_raster       <- raster(mortality_274_idw)
 mort_274_raster_clip     <- mask(mort_274_raster, modern_borders_clip_sp)
 
