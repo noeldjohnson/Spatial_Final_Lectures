@@ -1,6 +1,6 @@
 # Code for Spatial Econometrics: "Alesina et al. (2016) Afghanistan Replication"
 # Created: 10-28-19
-# Last Updated: 11-20-21
+# Last Updated: 11-21-21
 # Author: Noel Johnson
 # This code is based on that of Richard Bluhm.
 
@@ -24,7 +24,7 @@ africa_sf <- st_transform(africa_sf, "+proj=aeqd")
 second_sf <- africa_sf %>%
   st_snap(africa_sf, tolerance = 1) %>% group_by(continent) %>% summarize()
 
-#We will create the diagram based on the centroid of each country. Careful, st_voronoi() requires one single combined input feature and also returns a single feature.
+#We will create the diagram based on the centroid of each country.
 
 # Here's a full workflow...
 africa_vo_sf <- africa_sf %>%
@@ -103,7 +103,7 @@ greg.dcw.sf <- greg.dcw.sf %>% mutate(ID = 1:nrow(.)) %>% left_join(light.df, by
 
 # Open the Gridded Population of the World (GPW) v3 population density raster for the year 2000 (./gpw3_pdens_2000/glds00g.bil) and set the CRS to match the GREG-DCW features. Then extract the population density in each ethnic homeland, call this new variable pop and merge back to the GREG-DCW feature.
 
-r.pop <- raster("/Users/noeljohnson/Dropbox/Teaching/Spatial Fall2021/Spatial_Final_Lectures/Lecture 7/Alesina_2016_rep/gpw3_pdens_2000/glds00g.bil")
+r.pop <- raster("/Users/noeljohnson/Dropbox/Teaching/Spatial Fall2021/Lecture 7/Alesina_2016_rep/gpw3_pdens_2000/glds00g.bil")
 # ds00g population densities in 2000, unadjusted, persons per square km
 crs(r.pop)=crs(greg.dcw.sf)
 crs(r.pop)
