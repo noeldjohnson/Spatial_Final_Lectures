@@ -1,19 +1,9 @@
 {
   "weighting_profiles": [
     {
-      "name": "horse",
-      "way": "wagon",
-      "value": 1
-    },
-    {
-      "name": "horse",
-      "way": "railway",
-      "value": 0.027
-    },
-    {
-      "name": "horse",
-      "way": "railaccess",
-      "value": 1.5
+      "name": "foot",
+      "way": "motorway",
+      "value": 0
     },
     {
       "name": "foot",
@@ -137,6 +127,134 @@
       "way": "tertiary_link",
       "value": 0.7,
       "max_speed": 5
+    },
+    {
+      "name": "horse",
+      "way": "motorway",
+      "value": 0
+    },
+    {
+      "name": "horse",
+      "way": "trunk",
+      "value": 0.25
+    },
+    {
+      "name": "horse",
+      "way": "primary",
+      "value": 0.5,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "secondary",
+      "value": 0.5,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "tertiary",
+      "value": 0.75,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "unclassified",
+      "value": 0.75,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "residential",
+      "value": 0.75,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "service",
+      "value": 0.75,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "track",
+      "value": 1,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "cycleway",
+      "value": 0.9,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "path",
+      "value": 1,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "steps",
+      "value": 0,
+      "max_speed": 2
+    },
+    {
+      "name": "horse",
+      "way": "ferry",
+      "value": 0.2,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "living_street",
+      "value": 0.8,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "bridleway",
+      "value": 1,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "footway",
+      "value": 1,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "pedestrian",
+      "value": 0.2,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "motorway_link",
+      "value": 0
+    },
+    {
+      "name": "horse",
+      "way": "trunk_link",
+      "value": 0.25
+    },
+    {
+      "name": "horse",
+      "way": "primary_link",
+      "value": 0.5,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "secondary_link",
+      "value": 0.5,
+      "max_speed": 6.4
+    },
+    {
+      "name": "horse",
+      "way": "tertiary_link",
+      "value": 0.75,
+      "max_speed": 6.4
     },
     {
       "name": "wheelchair",
@@ -1401,62 +1519,52 @@
     {
       "name": "foot",
       "traffic_lights": 2,
-      "turn": 0,
-      "restrictions": false
+      "turn": 0
     },
     {
       "name": "horse",
       "traffic_lights": 8,
-      "turn": 0,
-      "restrictions": false
+      "turn": 0
     },
     {
       "name": "wheelchair",
       "traffic_lights": 2,
-      "turn": 7.5,
-      "restrictions": false
+      "turn": 7.5
     },
     {
       "name": "bicycle",
       "traffic_lights": 2,
-      "turn": 6,
-      "restrictions": false
+      "turn": 6
     },
     {
       "name": "moped",
       "traffic_lights": 8,
-      "turn": 7.5,
-      "restrictions": true
+      "turn": 7.5
     },
     {
       "name": "motorcycle",
       "traffic_lights": 8,
-      "turn": 7.5,
-      "restrictions": true
+      "turn": 7.5
     },
     {
       "name": "motorcar",
       "traffic_lights": 8,
-      "turn": 7.5,
-      "restrictions": true
+      "turn": 7.5
     },
     {
       "name": "goods",
       "traffic_lights": 8,
-      "turn": 7.5,
-      "restrictions": true
+      "turn": 7.5
     },
     {
       "name": "hgv",
       "traffic_lights": 8,
-      "turn": 7.5,
-      "restrictions": true
+      "turn": 7.5
     },
     {
       "name": "psv",
       "traffic_lights": 8,
-      "turn": 7.5,
-      "restrictions": true
+      "turn": 7.5
     }
   ]
 }

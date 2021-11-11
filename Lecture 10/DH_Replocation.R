@@ -8,7 +8,7 @@ library(sf)
 library(units)
 library(dodgr)
 
-setwd("/Users/noeljohnson_laptop/Dropbox/Teaching/Spatial Fall2021/Lecture 9/Donaldson_2016_rep") 
+setwd("/Users/noeljohnson/Dropbox/Teaching/Spatial Fall2021/Spatial_Final_Lectures/Lecture 10/Donaldson_2016_rep") 
 
 # Open the county data (./dh_shapes/US_county_1890.shp).
 # Subset the data to counties in Pennsylvania (via STATENAM).
@@ -100,7 +100,9 @@ network.sf <- network.sf %>% mutate(ID = 1:n())
 # get the structure
 table(network.sf %>% pull(waytype))
 
-# write_dodgr_wt_profile(file = "profile")
+## Things fail from here. Boo
+
+write_dodgr_wt_profile(file = "profile")
 
 # create an equally weighted net
 
